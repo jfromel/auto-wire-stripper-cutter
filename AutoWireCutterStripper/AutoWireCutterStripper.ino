@@ -40,6 +40,7 @@ const int TEXT_OFFSET = 3;
 
 // Values for drawing the wire at the top of the OLED screen.
 const int WIRE_STRAND_LENGTH = 30;
+const int WIRE_RETRACTION = -1;
 const int WIRE_STRAND_Y_POS = 7;
 const int WIRE_INSULATION_WIDTH = SCREEN_WIDTH - (WIRE_STRAND_LENGTH * 2);
 const int WIRE_INSULATION_HEIGHT = 14;
@@ -275,10 +276,15 @@ void cut() {
     moveBlade(CUTTING_STEPS);
 }
 
+void retract() {
+  moveWire(WIRE_RETRACTION);
+  moveWire(-WIRE_RETRACTION);
+}
 
 void strip() {
     moveBlade(-(comps[STRIPPING_DEPTH_INDEX].value * STRIPPING_MULTIPLIER));
     moveBlade(comps[STRIPPING_DEPTH_INDEX].value * STRIPPING_MULTIPLIER);
+    retract();
 }
 
 
